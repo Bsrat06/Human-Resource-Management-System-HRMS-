@@ -1,0 +1,26 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Employee List</h2>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Department</th>
+      <th>Job Title</th>
+      <th>Actions</th>
+    </tr>
+    {% for employee in employees %}
+      <tr>
+        <td>{{ employee.user.get_full_name }}</td>
+        <td>{{ employee.department.name }}</td>
+        <td>{{ employee.job_title }}</td>
+        <td>
+          <a href="{% url 'employee_detail' employee.pk %}">View</a>
+          <a href="{% url 'employee_edit' employee.pk %}">Edit</a>
+          <a href="{% url 'employee_delete' employee.pk %}">Delete</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  <a href="{% url 'employee_add' %}">Add Employee</a>
+{% endblock %}

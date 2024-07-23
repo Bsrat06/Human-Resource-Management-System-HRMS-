@@ -1,0 +1,16 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>{{ employee.user.get_full_name }}</h2>
+  <p>Department: {{ employee.department.name }}</p>
+  <p>Job Title: {{ employee.job_title }}</p>
+  <p>Address: {{ employee.address }}</p>
+  <p>Contact Number: {{ employee.contact_number }}</p>
+  <p>Date of Hire: {{ employee.date_of_hire }}</p>
+  {% if employee.documents %}
+    <p>Documents: <a href="{{ employee.documents.url }}">Download</a></p>
+  {% endif %}
+  <a href="{% url 'employee_edit' employee.pk %}">Edit</a>
+  <a href="{% url 'employee_delete' employee.pk %}">Delete</a>
+  <a href="{% url 'employee_list' %}">Back to List</a>
+{% endblock %}

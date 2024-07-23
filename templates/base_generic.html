@@ -1,0 +1,23 @@
+<!-- templates/base_generic.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Site{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>My Site</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'employee_list' %}">Employees</a></li>
+            <!-- Add more navigation links here -->
+        </ul>
+    </nav>
+    <div>
+        {% block content %}
+        <!-- Default content -->
+        {% endblock %}
+    </div>
+</body>
+</html>

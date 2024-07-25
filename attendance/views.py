@@ -5,27 +5,27 @@ from .forms import AttendanceRecordForm
 
 class AttendanceRecordListView(ListView):
     model = AttendanceRecord
-    template_name = 'attendance/attendance_record_list.html'
-    context_object_name = 'records'
+    template_name = "attendance/attendance_record_list.html"
+    context_object_name = "records"
 
 class AttendanceRecordDetailView(DetailView):
     model = AttendanceRecord
-    template_name = 'attendance/attendance_record_detail.html'
-    context_object_name = 'record'
+    template_name = "attendance/attendance_record_detail.html"
+    context_object_name = "record"
 
 class AttendanceRecordCreateView(CreateView):
     model = AttendanceRecord
     form_class = AttendanceRecordForm
-    template_name = 'attendance/attendance_record_form.html'
-    success_url = reverse_lazy('attendance_record_list')
+    template_name = "attendance/attendance_record_form.html"
+    success_url = reverse_lazy("attendance_record_list")
 
 class AttendanceRecordUpdateView(UpdateView):
     model = AttendanceRecord
     form_class = AttendanceRecordForm
-    template_name = 'attendance/attendance_record_form.html'
-    success_url = reverse_lazy('attendance_record_list')
+    template_name = "attendance/attendance_record_form.html"
+    success_url = reverse_lazy("attendance_record_list")
 
 class AttendanceRecordDeleteView(DeleteView):
     model = AttendanceRecord
-    template_name = 'attendance/attendance_record_confirm_delete.html'
-    success_url = reverse_lazy('attendance_record_list')
+    template_name = "attendance/attendance_record_confirm_delete.html"
+    success_url = reverse_lazy("attendance_record_list")

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "training", #new
     "benefits", #new
     "reports",  #new
+    "home_page",    #new
 ]
 
 AUTH_USER_MODEL= "employees.CustomUser"     #new

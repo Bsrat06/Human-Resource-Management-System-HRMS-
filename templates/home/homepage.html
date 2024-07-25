@@ -1,0 +1,29 @@
+<!-- templates/base_generic.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}HRM System{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header>
+        <center><h1>Human Resource Management</h1>
+            <br>
+        <h2>Home Page</h2>
+        <br>
+        <h3 style= "color: Red";>Coming Soon!</h3></center>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'employees' %}">Employees</a></li>
+            <!-- Add more navigation links here -->
+        </ul>
+    </nav>
+    <div>
+        {% block content %}
+        <!-- Default content -->
+        {% endblock %}
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Attendance Records</h2>
+  <table>
+    <tr>
+      <th>Employee</th>
+      <th>Date</th>
+      <th>Check-in Time</th>
+      <th>Check-out Time</th>
+      <th>Status</th>
+    </tr>
+    {% for record in records %}
+    <tr>
+      <td>{{ record.employee.username }}</td>
+      <td>{{ record.date }}</td>
+      <td>{{ record.check_in_time }}</td>
+      <td>{{ record.check_out_time }}</td>
+      <td>{{ record.status }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <a href="{% url 'attendance_record_create' %}">Add New Record</a>
+{% endblock %}

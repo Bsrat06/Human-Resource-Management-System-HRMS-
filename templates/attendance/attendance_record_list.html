@@ -2,6 +2,13 @@
 
 {% block content %}
   <h2>Attendance Records</h2>
+
+  <form method="get" action=".">
+    <input type="text" name="q" placeholder="Search by name or email" value="{{ request.GET.q }}">
+    <button type="submit">Search</button>
+
+  </form>
+  {% if records %}
   <table>
     <tr>
       <th>Employee</th>
@@ -20,5 +27,8 @@
     </tr>
     {% endfor %}
   </table>
+  {% else %}
+    <p>No attendance records found for the given search query.</p>
+  {% endif %}
   <a href="{% url 'attendance_record_create' %}">Add New Record</a>
 {% endblock %}

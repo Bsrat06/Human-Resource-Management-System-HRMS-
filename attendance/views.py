@@ -18,12 +18,15 @@ class AttendanceRecordListView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get("q")
+        queryset = AttendanceRecord.objects.all().order_by('employee__first_name')
+        
         if query:
-            return AttendanceRecord.objects.filter(
-                Q(employee__first_name__icontains=query)
-                | Q(employee__email__icontains=query)
+            queryset = queryset.filter(
+                Q(employee__first_name__icontains=query) |
+                Q(employee__email__icontains=query)
             )
-        return super().get_queryset()
+        return queryset
+
 
 
 class AttendanceRecordDetailView(DetailView):

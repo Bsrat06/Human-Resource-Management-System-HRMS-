@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AttendanceRecord, AttendanceSummary
+from .models import AttendanceRecord, AttendanceSummary, LeaveRequest
 
 
 
@@ -17,3 +17,4 @@ class AttendanceSummaryAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(AttendanceRecord, AttendanceRecordAdmin)
 admin.site.register(AttendanceSummary, AttendanceSummaryAdmin)
+admin.site.register(LeaveRequest)

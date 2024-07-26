@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>My Leave Requests</h2>
+  <ul>
+    {% for request in leave_requests %}
+      <li>{{ request.start_date }} to {{ request.end_date }}: {{ request.reason }} ({{ request.status }})</li>
+    {% empty %}
+      <li>No leave requests found.</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'leave_request_create' %}">Submit New Leave Request</a>
+{% endblock %}

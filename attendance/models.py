@@ -25,3 +25,14 @@ class AttendanceSummary(models.Model):
 
     def __str__(self):
         return f'{self.employee.first_name} {self.employee.last_name}  -  {self.month.strftime("%B %Y")}'
+
+
+class LeaveRequest(models.Model):
+    employee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    reason = models.TextField()
+    status = models.CharField(max_length=20, choices=[('Pending', 'Pending'), ('Approved', 'Approved'), ('Rejected', 'Rejected')], default='Pending')
+
+    def __str__(self):
+        return f'{self.employee.get_full_name()} - {self.start_date} to {self.end_date}'

@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.db.models import Q
 from .models import Employee
 from .forms import EmployeeForm
 
@@ -7,6 +8,15 @@ class EmployeeListView(ListView):
     model = Employee
     template_name = "employees/employee_list.html"
     context_object_name = "employees"
+    
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        if query:
+            return Employee.objects.filter(
+                Q(employee__first_name__icontains=query)
+                | Q(employee__email__icontains=query)
+            )
+        return super().get_queryset()
 
 class EmployeeDetailView(DetailView):
     model = Employee

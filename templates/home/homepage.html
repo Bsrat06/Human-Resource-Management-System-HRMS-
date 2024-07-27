@@ -50,12 +50,14 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'attendance_record_list' %}">Attendance</a>
+              <a href="{% url 'leave_history' %}">Leave History</a>
+
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'leave_request_create' %}">Submit Leave Request</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'leave_request_list' %}">View Leave Requests</a>
+              <a class="nav-link" href="{% url 'leave_request_list' %}">View Pending Leave Requests</a>
             </li>
           </ul>
         </div>
@@ -81,3 +83,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>
+
+
+

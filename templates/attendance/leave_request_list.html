@@ -6,7 +6,8 @@
     {% for request in leave_requests %}
       <li>{{ request.start_date }} to {{ request.end_date }}: {{ request.reason }} ({{ request.status }})</li>
     {% empty %}
-      <li>No leave requests found.</li>
+      <li>No pending leave requests found.</li>
+      <a href="{% url 'leave_history' %}">View Leave History</a>
     {% endfor %}
   </ul>
   <a href="{% url 'leave_request_create' %}">Submit New Leave Request</a>

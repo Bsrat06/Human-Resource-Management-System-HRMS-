@@ -1,0 +1,26 @@
+<!-- templates/attendance/leave_history.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Leave History</h2>
+{% if leave_requests %}
+    <table>
+        <tr>
+            <th>Start Date&nbsp;&nbsp;&nbsp;</th>
+            <th>End Date&nbsp;&nbsp;&nbsp;</th>
+            <th>Reason&nbsp;&nbsp;&nbsp;</th>
+            <th>Status</th>
+        </tr>
+        {% for request in leave_requests %}
+        <tr>
+            <td>{{ request.start_date }}&nbsp;&nbsp;</td>
+            <td>{{ request.end_date }}&nbsp;&nbsp;</td>
+            <td>{{ request.reason }}&nbsp;&nbsp;</td>
+            <td>{{ request.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No leave history found.</p>
+{% endif %}
+{% endblock %}

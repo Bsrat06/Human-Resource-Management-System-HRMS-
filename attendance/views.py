@@ -19,11 +19,11 @@ class AttendanceRecordListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         query = self.request.GET.get("q")
-        queryset = AttendanceRecord.objects.all().order_by('employee__first_name')
+        queryset = AttendanceRecord.objects.all().order_by('employee__firstname')
         
         if query:
             queryset = queryset.filter(
-                Q(employee__first_name__icontains=query) |
+                Q(employee__firstname__icontains=query) |
                 Q(employee__email__icontains=query)
             )
         return queryset
@@ -72,4 +72,14 @@ class LeaveRequestListView(LoginRequiredMixin, ListView):
     context_object_name = 'leave_requests'
 
     def get_queryset(self):
+        return LeaveRequest.objects.filter(employee=self.request.user, status="pending")
+
+
+class LeaveHistoryView(ListView):
+    model = LeaveRequest
+    template_name = 'attendance/leave_history.html'
+    context_object_name = 'leave_requests'
+
+    def get_queryset(self):
         return LeaveRequest.objects.filter(employee=self.request.user)
+

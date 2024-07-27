@@ -15,7 +15,7 @@ class AttendanceRecord(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
 
     def __str__(self):
-        return f'{self.employee.first_name} {self.employee.last_name}  -  {self.date}  -  {self.status}'
+        return f'{self.employee.firstname} {self.employee.last_name}  -  {self.date}  -  {self.status}'
 
 class AttendanceSummary(models.Model):
     employee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -24,7 +24,7 @@ class AttendanceSummary(models.Model):
     total_days_absent = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.employee.first_name} {self.employee.last_name}  -  {self.month.strftime("%B %Y")}'
+        return f'{self.employee.firstname} {self.employee.last_name}  -  {self.month.strftime("%B %Y")}'
 
 
 class LeaveRequest(models.Model):

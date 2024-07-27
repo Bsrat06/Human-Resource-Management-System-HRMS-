@@ -7,7 +7,10 @@ from .views import (
     AttendanceRecordDeleteView,
     LeaveRequestCreateView,
     LeaveRequestListView,
+    LeaveHistoryView
     )
+
+#app_name = 'attendance'
 
 urlpatterns = [
     path("", AttendanceRecordListView.as_view(), name="attendance_record_list"),
@@ -17,4 +20,5 @@ urlpatterns = [
     path("<int:pk>/delete/", AttendanceRecordDeleteView.as_view(), name="attendance_record_delete"),
     path('leave-request/', LeaveRequestCreateView.as_view(), name='leave_request_create'),
     path('leave-requests/', LeaveRequestListView.as_view(), name='leave_request_list'),
+    path('leave-history/', LeaveHistoryView.as_view(), name='leave_history'),
 ]

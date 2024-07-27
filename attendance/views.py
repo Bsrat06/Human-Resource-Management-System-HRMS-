@@ -1,4 +1,3 @@
-from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
     DetailView,
@@ -6,12 +5,14 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from django.urls import reverse_lazy
 from django.db.models import Q
 from .models import AttendanceRecord, LeaveRequest
 from .forms import AttendanceRecordForm, LeaveRequestForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class AttendanceRecordListView(ListView):
+class AttendanceRecordListView(LoginRequiredMixin, ListView):
     model = AttendanceRecord
     template_name = "attendance/attendance_record_list.html"
     context_object_name = "records"
@@ -29,33 +30,33 @@ class AttendanceRecordListView(ListView):
 
 
 
-class AttendanceRecordDetailView(DetailView):
+class AttendanceRecordDetailView(LoginRequiredMixin, DetailView):
     model = AttendanceRecord
     template_name = "attendance/attendance_record_detail.html"
     context_object_name = "record"
 
 
-class AttendanceRecordCreateView(CreateView):
+class AttendanceRecordCreateView(LoginRequiredMixin, CreateView):
     model = AttendanceRecord
     form_class = AttendanceRecordForm
     template_name = "attendance/attendance_record_form.html"
     success_url = reverse_lazy("attendance_record_list")
 
 
-class AttendanceRecordUpdateView(UpdateView):
+class AttendanceRecordUpdateView(LoginRequiredMixin, UpdateView):
     model = AttendanceRecord
     form_class = AttendanceRecordForm
     template_name = "attendance/attendance_record_form.html"
     success_url = reverse_lazy("attendance_record_list")
 
 
-class AttendanceRecordDeleteView(DeleteView):
+class AttendanceRecordDeleteView(LoginRequiredMixin, DeleteView):
     model = AttendanceRecord
     template_name = "attendance/attendance_record_confirm_delete.html"
     success_url = reverse_lazy("attendance_record_list")
 
 
-class LeaveRequestCreateView(CreateView):
+class LeaveRequestCreateView(LoginRequiredMixin, CreateView):
     model = LeaveRequest
     form_class = LeaveRequestForm
     template_name = 'attendance/leave_request_form.html'
@@ -65,7 +66,7 @@ class LeaveRequestCreateView(CreateView):
         form.instance.employee = self.request.user
         return super().form_valid(form)
 
-class LeaveRequestListView(ListView):
+class LeaveRequestListView(LoginRequiredMixin, ListView):
     model = LeaveRequest
     template_name = 'attendance/leave_request_list.html'
     context_object_name = 'leave_requests'

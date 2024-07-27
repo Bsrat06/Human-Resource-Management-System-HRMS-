@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # Django apps...
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     # Local
     "employees",    #new
     "recruitment",  #new
@@ -49,6 +56,31 @@ INSTALLED_APPS = [
     "home_page",    #new
 ]
 
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USER_DISPLAY = lambda user: f"{user.firstname} {user.last_name}"  # Custom display for the user
+
+
+ACCOUNT_ADAPTER = 'employees.adapters.CustomAccountAdapter'     #new
+
+
+ACCOUNT_FORMS = {
+    'signup': 'employees.forms.CustomSignupForm',   #new
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 AUTH_USER_MODEL= "employees.CustomUser"     #new
 
 MIDDLEWARE = [
@@ -59,6 +91,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',     #new
 ]
 
 ROOT_URLCONF = 'hrm_project.urls'
@@ -133,3 +166,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

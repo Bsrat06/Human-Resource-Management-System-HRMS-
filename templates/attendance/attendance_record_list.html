@@ -2,10 +2,12 @@
 
 {% block content %}
   <h2>Attendance Records</h2>
+  <hr>
 
   <form method="get" action=".">
     <input type="text" name="q" placeholder="Search by name or email" value="{{ request.GET.q }}">
     <button type="submit">Search</button>
+    <hr>
 
   </form>
   {% if records %}
@@ -30,6 +32,6 @@
   <a href="{% url 'attendance_report' %}">Download Attendance Report</a>
   {% else %}
     <p>No attendance records found.</p>
-  {% endif %}
+  {% endif %}<hr>
   <a href="{% url 'attendance_record_create' %}">Add New Record</a>
 {% endblock %}

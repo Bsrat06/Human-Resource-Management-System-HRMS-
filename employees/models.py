@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.conf import settings
-from django.utils import timezone
+from attendance.models import Notification
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):

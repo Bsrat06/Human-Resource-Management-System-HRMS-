@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 class AttendanceRecord(models.Model):
     STATUS_CHOICES= [
@@ -36,3 +37,13 @@ class LeaveRequest(models.Model):
 
     def __str__(self):
         return f'{self.employee.get_full_name()} - {self.start_date} to {self.end_date}'
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'Notification for {self.user.firstname} {self.user.last_name} at {self.timestamp}'

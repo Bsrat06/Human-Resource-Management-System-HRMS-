@@ -27,8 +27,9 @@
     </tr>
     {% endfor %}
   </table>
+  <a href="{% url 'attendance_report' %}">Download Attendance Report</a>
   {% else %}
-    <p>No attendance records found for the given search query.</p>
+    <p>No attendance records found.</p>
   {% endif %}
   <a href="{% url 'attendance_record_create' %}">Add New Record</a>
 {% endblock %}

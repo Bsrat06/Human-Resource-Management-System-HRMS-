@@ -1,0 +1,3 @@
+[console_scripts]
+pdfgen-setup=pdfgen.setup:main
+

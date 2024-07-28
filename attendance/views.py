@@ -10,6 +10,9 @@ from django.db.models import Q
 from .models import AttendanceRecord, LeaveRequest
 from .forms import AttendanceRecordForm, LeaveRequestForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
 
 class AttendanceRecordListView(LoginRequiredMixin, ListView):
@@ -83,3 +86,63 @@ class LeaveHistoryView(ListView):
     def get_queryset(self):
         return LeaveRequest.objects.filter(employee=self.request.user)
 
+# attendance and leave reports
+
+def generate_attendance_report(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="attendance_report.pdf"'
+
+    p = canvas.Canvas(response, pagesize=letter)
+    width, height = letter
+
+    p.setFont("Helvetica", 12)
+    p.drawString(30, height - 30, "Attendance Report")
+    
+    attendance_records = AttendanceRecord.objects.all().order_by('employee__firstname')
+    y = height - 60
+    
+    p.drawString(30, y, "Employee")
+    p.drawString(200, y, "Date")
+    p.drawString(350, y, "Status")
+    y -= 20
+    
+    for record in attendance_records:
+        p.drawString(30, y, f"{record.employee.firstname} {record.employee.last_name}")
+        p.drawString(200, y, str(record.date))
+        p.drawString(350, y, record.status)
+        y -= 20
+
+    p.showPage()
+    p.save()
+    return response
+
+
+def generate_leave_report(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="leave_report.pdf"'
+
+    p = canvas.Canvas(response, pagesize=letter)
+    width, height = letter
+
+    p.setFont("Helvetica", 12)
+    p.drawString(30, height - 30, "Leave Report")
+    
+    leave_requests = LeaveRequest.objects.all().order_by('employee__firstname')
+    y = height - 60
+    
+    p.drawString(30, y, "Employee")
+    p.drawString(300, y, "Start Date")
+    p.drawString(400, y, "End Date")
+    p.drawString(500, y, "Status")
+    y -= 20
+    
+    for request in leave_requests:
+        p.drawString(30, y, f"{request.employee.firstname} {request.employee.last_name}")
+        p.drawString(300, y, str(request.start_date))
+        p.drawString(400, y, str(request.end_date))
+        p.drawString(500, y, request.status)
+        y -= 20
+
+    p.showPage()
+    p.save()
+    return response

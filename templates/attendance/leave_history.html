@@ -20,6 +20,7 @@
         </tr>
         {% endfor %}
     </table>
+    <a href="{% url 'leave_report' %}">Download Leave Report</a>
 {% else %}
     <p>No leave history found.</p>
 {% endif %}

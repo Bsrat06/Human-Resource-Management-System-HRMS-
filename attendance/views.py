@@ -49,6 +49,11 @@ class AttendanceRecordCreateView(LoginRequiredMixin, CreateView):
     form_class = AttendanceRecordForm
     template_name = "attendance/attendance_record_form.html"
     success_url = reverse_lazy("attendance_record_list")
+    
+    def test_func(self):
+        allowed_groups = ['Manager', 'Admin']
+        user_groups = self.request.user.groups.values_list('name', flat=True)
+        return any(group in allowed_groups for group in user_groups)
 
     # for notifications on attendance actions
     def form_valid(self, form):
@@ -71,6 +76,11 @@ class AttendanceRecordUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "attendance/attendance_record_form.html"
     success_url = reverse_lazy("attendance_record_list")
     
+    def test_func(self):
+        allowed_groups = ['Admin']
+        user_groups = self.request.user.groups.values_list('name', flat=True)
+        return any(group in allowed_groups for group in user_groups)
+    
     # for notifications on updating attendance actions
     def form_valid(self, form):
             response = super().form_valid(form)
@@ -82,6 +92,11 @@ class AttendanceRecordDeleteView(LoginRequiredMixin, DeleteView):
     model = AttendanceRecord
     template_name = "attendance/attendance_record_confirm_delete.html"
     success_url = reverse_lazy("attendance_record_list")
+    
+    def test_func(self):
+        allowed_groups = ['Admin']
+        user_groups = self.request.user.groups.values_list('name', flat=True)
+        return any(group in allowed_groups for group in user_groups)
     
     # for notifications on deleting attendance actions
     def form_valid(self, form):
@@ -95,6 +110,11 @@ class LeaveRequestCreateView(LoginRequiredMixin, CreateView):
     form_class = LeaveRequestForm
     template_name = 'attendance/leave_request_form.html'
     success_url = reverse_lazy('leave_request_list')
+    
+    def test_func(self):
+        allowed_groups = ["Employee", "Manager", "Admin"]
+        user_groups = self.request.user.groups.values_list('name', flat=True)
+        return any(group in allowed_groups for group in user_groups)
 
     def form_valid(self, form):
         form.instance.employee = self.request.user
@@ -107,6 +127,11 @@ class LeaveRequestListView(LoginRequiredMixin, ListView):
     model = LeaveRequest
     template_name = 'attendance/leave_request_list.html'
     context_object_name = 'leave_requests'
+    
+    def test_func(self):
+        allowed_groups = ["Employee", 'Manager', 'Admin']
+        user_groups = self.request.user.groups.values_list('name', flat=True)
+        return any(group in allowed_groups for group in user_groups)
 
     def get_queryset(self):
         return LeaveRequest.objects.filter(employee=self.request.user, status="pending")
@@ -116,6 +141,11 @@ class LeaveHistoryView(ListView):
     model = LeaveRequest
     template_name = 'attendance/leave_history.html'
     context_object_name = 'leave_requests'
+    
+    def test_func(self):
+        allowed_groups = ["Employee", 'Manager', 'Admin']
+        user_groups = self.request.user.groups.values_list('name', flat=True)
+        return any(group in allowed_groups for group in user_groups)
 
     def get_queryset(self):
         return LeaveRequest.objects.filter(employee=self.request.user)
@@ -125,6 +155,11 @@ class NotificationListView(LoginRequiredMixin, ListView):
     model = Notification
     template_name = 'notifications/notification_list.html'
     context_object_name = 'notifications'
+    
+    def test_func(self):
+        allowed_groups = ["Employee", 'Manager', 'Admin']
+        user_groups = self.request.user.groups.values_list('name', flat=True)
+        return any(group in allowed_groups for group in user_groups)
 
     def get_queryset(self):
         return Notification.objects.filter(user=self.request.user).order_by('-timestamp')

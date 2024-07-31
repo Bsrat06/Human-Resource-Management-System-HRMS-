@@ -1,13 +1,26 @@
 from django import forms
-from .models import Employee
+from .models import Employee, CustomUser
 from allauth.account.forms import SignupForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'firstname', 'last_name')
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'firstname', 'last_name', 'is_active', 'is_staff', 'is_superuser')
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
         fields = ["user", "department", "job_title", "address", "contact_number", "date_of_hire", "documents"]
-
-
+        
+        
 class CustomSignupForm(SignupForm):
     firstname = forms.CharField(max_length=30, label='First Name')
     last_name = forms.CharField(max_length=30, label='Last Name')

@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
 
 {% block content %}
+{% user_in_groups "Manager" "Admin" as is_member %}
+{% if is_member %}
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -34,4 +37,7 @@
       </div>
     </div>
   </div>
+  {% else %}
+    <p>You do not have access to this content.</p>
+{% endif %}
 {% endblock %}

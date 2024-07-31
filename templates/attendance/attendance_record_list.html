@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
 
 {% block content %}
   <h2>Attendance Records</h2>
@@ -33,5 +34,10 @@
   {% else %}
     <p>No attendance records found.</p>
   {% endif %}<hr>
+  {% user_in_groups "Manager" "Admin" as is_member %}
+{% if is_member %}
   <a href="{% url 'attendance_record_create' %}">Add New Record</a>
+  {% else %}
+  <p>You do not have permission to add new content.</p>
+{% endif %}
 {% endblock %}

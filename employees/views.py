@@ -7,7 +7,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from attendance.utils import create_notification
 from attendance.views import NotificationListView, notification_list, mark_notification_as_read, mark_all_notifications_as_read
 
-
 class EmployeeListView(LoginRequiredMixin, ListView):
     model = Employee
     template_name = "employees/employee_list.html"

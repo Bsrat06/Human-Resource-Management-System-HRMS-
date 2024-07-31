@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
 
 {% block content %}
+{% user_in_groups "Manager" "Admin" as is_member %}
+{% if is_member %}
   <h2>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Attendance Record</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Save</button>
   </form>
+  {% else %}
+  <p>You do not have access to this site.</p>
+{% endif %}
   <a href="{% url 'attendance_record_list' %}">Back to List</a>
 {% endblock %}

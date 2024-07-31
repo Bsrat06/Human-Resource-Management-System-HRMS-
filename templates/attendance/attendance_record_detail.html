@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
 
 {% block content %}
   <h2>Attendance Record Details</h2>
@@ -7,7 +8,12 @@
   <p>Check-in Time: {{ record.check_in_time }}</p>
   <p>Check-out Time: {{ record.check_out_time }}</p>
   <p>Status: {{ record.status }}</p>
+{% user_in_groups "Manager" "Admin" as is_member %}
+{% if is_member %}
   <a href="{% url 'attendance_record_edit' record.pk %}">Edit</a>
   <a href="{% url 'attendance_record_delete' record.pk %}">Delete</a>
+  {% else %}
+  <p>You do not have access to edit or delete this content.</p>
+{% endif %}
   <a href="{% url 'attendance_record_list' %}">Back to List</a>
 {% endblock %}

@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
 
 {% block content %}
+{% user_in_groups "Manager" "Admin" as is_member %}
+{% if is_member %}
   <h2>Delete Attendance Record</h2>
   <p>Are you sure you want to delete this record?</p>
   <form method="post">
@@ -8,4 +11,7 @@
     <button type="submit">Confirm</button>
   </form>
   <a href="{% url 'attendance_record_list' %}">Cancel</a>
+  {% else %}
+  <p>You do not have access to this site.</p>
+{% endif %}
 {% endblock %}

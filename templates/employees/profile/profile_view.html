@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Profile</h2>
+  <div>
+    <p><strong>First name:</strong> {{ user.firstname }}</p>
+    <p><strong>Last name:</strong> {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Profile picture:</strong></p>
+    {% if user.profile_picture %}
+      <img src="{{ user.profile_picture.url }}" alt="Profile Picture" style="max-width: 200px; max-height: 200px;">
+    {% else %}
+      <p>No profile picture available</p>
+    {% endif %}
+  </div>
+  <a href="{% url "profile_edit" %}">Edit</a>
+{% endblock %}

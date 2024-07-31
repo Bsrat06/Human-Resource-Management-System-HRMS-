@@ -1,10 +1,13 @@
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.db.models import Q
 from .models import Employee, Notification
-from .forms import EmployeeForm
+from .forms import EmployeeForm, CustomUserChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from attendance.utils import create_notification
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from attendance.views import NotificationListView, notification_list, mark_notification_as_read, mark_all_notifications_as_read
 
 class EmployeeListView(LoginRequiredMixin, ListView):
@@ -35,7 +38,7 @@ class EmployeeCreateView(LoginRequiredMixin, CreateView):
     # for notifications on creating new employee
     def form_valid(self, form):
             response = super().form_valid(form)
-            create_notification(self.request.user, 'You created an employee record.')
+            create_notification(self.request.user, "You created an employee record.")
             return response
 
 class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
@@ -47,7 +50,7 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
     # for notifications on updating employee informationS
     def form_valid(self, form):
             response = super().form_valid(form)
-            create_notification(self.request.user, 'You updated an employee record.')
+            create_notification(self.request.user, "You updated an employee record.")
             return response
 
 class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
@@ -58,5 +61,26 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
     # for notifications on deleting an employee actions
     def form_valid(self, form):
             response = super().form_valid(form)
-            create_notification(self.request.user, 'You deleted an employee record.')
+            create_notification(self.request.user, "You deleted an employee record.")
             return response
+        
+
+class ProfileView(LoginRequiredMixin, View):
+    context_object_name= "profile_view"
+    def get(self, request, *args, **kwargs):
+        return render(request, "employees/profile/profile_view.html")
+
+class ProfileEditView(LoginRequiredMixin, View):
+    form_class = CustomUserChangeForm
+    template_name = "employees/profile/profile_edit.html"
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(instance=request.user)
+        return render(request, self.template_name, {"form": form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect("profile")
+        return render(request, self.template_name, {"form": form})

@@ -8,12 +8,12 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('email', 'firstname', 'last_name')
+        fields = ("email", "firstname", "last_name")
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = ('email', 'firstname', 'last_name', 'is_active', 'is_staff', 'is_superuser')
+        fields = ("email", "firstname", "last_name", "is_active", "profile_picture")
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -22,12 +22,12 @@ class EmployeeForm(forms.ModelForm):
         
         
 class CustomSignupForm(SignupForm):
-    firstname = forms.CharField(max_length=30, label='First Name')
-    last_name = forms.CharField(max_length=30, label='Last Name')
+    firstname = forms.CharField(max_length=30, label="First Name")
+    last_name = forms.CharField(max_length=30, label="Last Name")
 
     def save(self, request):
         user = super().save(request)
-        user.firstname = self.cleaned_data['firstname']
-        user.last_name = self.cleaned_data['last_name']
+        user.firstname = self.cleaned_data["firstname"]
+        user.last_name = self.cleaned_data["last_name"]
         user.save()
         return user

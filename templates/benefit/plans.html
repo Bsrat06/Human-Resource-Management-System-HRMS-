@@ -13,6 +13,7 @@
           <th>Benefit</th>
           <th>Elligible</th>
           <th>Description</th>
+          <th>Day started</th>
           <th>Day limitation</th>
           <th>Status</th>
           <th>action</th>
@@ -21,11 +22,12 @@
       </thead>
       <tbody>
         {% for p in plans %}
-        {% if p.expiration_date  >= time and p.effective_date <= time %}
+        {% if p.expiration_date  >= time %}
         <tr>
           <td>{{p.name}}</td>
           <td>{{p.elligible}}</td>
           <td>{{p.description}}</td>
+          <td>{{p.effective_date}}</td>
           <td>{{p.expiration_date}}</td>
           <td>active</td>
           <td><button class="show-popup-button" data-title="{{p.name}}  , Elligiblity: {{p.elligible}}" data-text="{{p.name}}">Apply</button></td>

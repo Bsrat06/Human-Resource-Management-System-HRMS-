@@ -24,6 +24,8 @@ urlpatterns = [
     path("employees/", include("employees.urls")),
     path("", include("home_page.urls")),
     path("attendance/", include("attendance.urls")),
+    path("benefit/", include("benefits.urls")),
+    path("benefit/benefit", include("benefits.urls")),
     path('accounts/', include('allauth.urls')),
 ]
 

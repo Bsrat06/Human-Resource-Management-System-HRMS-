@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Enrollement
+from .models import *
 
-# Register your models here.
+admin.site.register(Benefit)
+admin.site.register(Enrollement)
+admin.site.register(Notifications)

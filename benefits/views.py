@@ -179,7 +179,7 @@ def enroll(request, eid):
     user = CustomUser.objects.filter(email=eid).first()
     if request.method == "POST":
        user_name = eid
-       ename = user.first_name +" "+ user.last_name
+       ename = user.firstname +" "+ user.last_name
        name = request.POST['name']
        description = request.POST['detail']
        enrol_date = request.POST['enrol']

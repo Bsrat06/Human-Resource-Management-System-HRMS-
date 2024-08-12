@@ -1,0 +1,165 @@
+<!-- page of all Benefit plans for hr  -->
+
+{% extends 'base.html' %}
+{% block content %}
+{% load static %} 
+ 
+<link rel="stylesheet" href="{% static 'style.css' %}">
+  <div class="container">
+    <h1>Benefits Plan Description</h1>
+
+    <div class="search-and-filters">
+      <div class="search-container">
+        <form action ="" method="POST">
+          {% csrf_token %}
+          <input type="text" class="search-input" placeholder="Search..." name = "search">
+        <button class="search-button">
+          Search
+        </button>
+        </form>
+      </div>
+    </div>
+    
+
+    <script>
+    const filterToggleBtn = document.querySelector('.filter-toggle-btn');
+    const filterOptions = document.querySelector('.filter-options');
+    
+    filterToggleBtn.addEventListener('click', () => {
+      filterOptions.classList.toggle('show');
+    });
+    </script>
+   
+    <table>
+      <thead>
+        <tr>
+          <th>Benefit</th>
+          <th>Elligible</th>
+          <th>Description</th>
+          <th>Day limitation</th>
+          <th>Status</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in plans %}
+        <tr>
+          <td>{{p.name}}</td>
+          <td>{{p.elligible}}</td>
+          <td>{{p.description}}</td>
+          <td>{{p.expiration_date}}</td>
+         
+          {% if p.expiration_date  > time and p.effective_date > time %}
+          <td style="color: blue;">pending</td>
+          {% endif %}
+          {% if p.expiration_date  < time and p.effective_date < time %}
+          <td style="color: red;">expired</td>
+          {% endif %}
+          {% if p.expiration_date  >= time and p.effective_date <= time %}
+          <td id ="active">active</td>
+          {% endif %}
+          <td> <button class="show-popup-button-push" data-title="{{p.id}}" data-text="{{p.name}} ">Edit</button>  
+            <button class="show-popup-button" data-title="{{p.id}}" data-text=" {{p.description}}">Delete</button></td></td>
+        </tr> 
+        {% endfor %}
+        
+      </tbody>
+    </table>
+    <div class="plan-details">
+     </div>
+  </div>
+
+  <div id="myPopup" class="popup">
+    <div class="popup-content">
+      <form method = "POST" action="">
+        {% csrf_token %}
+        <span class="close-button">&times;</span>
+        <h1>Are you Sure ?</h1>
+        <button class="popup-submit-button"style="width: 100%;" id = "inputpop" name="submits">yes</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="myPopupPush" class="popup">
+    <div class="popup-content">
+      <form method = "POST" action="">
+        {% csrf_token %}
+        <span class="close-button-push">&times;</span>
+        <div class="popuppush-title" ></div>
+        <div class="popuppush-text" ></div>
+        <labe>Push End Date : </label> </br>
+        <input class="popup-input"  type="date" name="date"/>
+        </br>
+        <labe>Elligible : </label> </br>
+        <input class="popup-input"  type="text" name="elligible"/>
+        <label for = "description" >Description</label>
+        <textarea  class="popup-input"  placeholder="description" name = "description" ></textarea>
+        <button class="popup-submit-button" id = "input" name="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  
+  <script>
+    var popup = document.getElementById("myPopup");
+    var popuppush = document.getElementById("myPopupPush");
+   
+    //get input
+    var inputValue = document.getElementById("input")
+    var inputValue2 = document.getElementById("inputpop")
+
+// Get the close button element
+var closeButton = document.getElementsByClassName("close-button")[0];
+var closeButtonPush = document.getElementsByClassName("close-button-push")[0];
+
+// Get all the show popup buttons
+var showPopupButtons = document.querySelectorAll(".show-popup-button");
+var showPopupButtonsPush = document.querySelectorAll(".show-popup-button-push");
+
+// Function to show the pop-up and populate the content
+function showPopup(title) {
+  inputValue2.value = title
+
+  popup.style.display = "block";
+}
+// Function to show the pop-up for push date and populate the content
+function showPopupPush(title, text) {
+  document.querySelector(".popuppush-title").textContent = text;
+  inputValue.value = title
+ 
+  popuppush.style.display = "block";
+}
+// Function to hide the pop-up
+function hidePopup() {
+  popup.style.display = "none";
+  popuppush.style.display = "none";
+}
+
+// Add click event listeners to the show popup buttons
+showPopupButtons.forEach(function(button) {
+  button.addEventListener("click", function() {
+    var title = this.dataset.title;
+    showPopup(title);
+  });
+});
+showPopupButtonsPush.forEach(function(button) {
+  button.addEventListener("click", function() {
+    var title = this.dataset.title;
+    var text = this.dataset.text;
+    showPopupPush(title, text);
+  });
+});
+
+// Hide the pop-up when the close button is clicked
+closeButton.addEventListener("click", hidePopup);
+closeButtonPush.addEventListener("click", hidePopup);
+
+// Hide the pop-up when the user clicks outside the pop-up
+window.addEventListener("click", function(event) {
+  if (event.target == popup) {
+    hidePopup();
+  }
+});
+  </script>
+
+{% endblock %}

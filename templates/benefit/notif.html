@@ -1,0 +1,32 @@
+<!-- Notification page  -->
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+  <div class="container">
+    <div class="notification-list">
+      <h2>Your Notifications</h2>
+      {% for e in enrol %}
+      <div class="notification">
+        <div>
+          <h3>{{e.ename}}</h3>
+          <p>{{e.Request}}</p>
+          <h3>{{e.date}}</h3>
+        </div>
+        <div class="notification-actions">
+          {% if e.Request is not None%}
+          <a href="request">to request page</a>
+          {% endif %}
+
+          <form action="" method="POST">
+            {% csrf_token %}
+            <button name ="submit" value="{{e.id}}">Delete</button></form>
+          
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+    
+  </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+ 
+  <div class="container">
+    <h1>Benefit Enrollment Requests</h1>
+    <div class="request-list">
+      {% for b in enroll %}
+      {% if b.state == "pending" and b.Request != "no request"%}
+      <div class="request-item">
+        <h3>{{b.name}}</h3>
+        <!-- enrollement plan table relation-->
+         <h4>{{b.Request_date}}</h4>
+         {% for ben in benefit %}
+         {% if ben.id == b.bid %}
+        <p>Benefit Plan: {{ben.name}} </p>
+        {% endif %}
+        {% endfor %}
+        <p>Enrollement Type : {{b.type}}</p>
+        <p>Request : {{b.Request}}</p>
+        <p>Detail: {{b.detail}}</p>
+        {% if b.bid == 0%}
+        <p style="color: red;size: 20px;">Personal Request</p>
+        {% endif %}
+        <p>Date for Enrollemnt : {{b.enrollement_date}}</p>
+        <p>Date for Expiration : {{b.expiration_date}}</p>
+        <div class="actions">
+          <form action="" method="POST">
+            {% csrf_token %}
+            {% if b.bid == 0%}
+            <label >Cost Estimation :</label>
+            <input type="number" required name="cost">
+            {% endif %}
+            <button name= "approve" value = "{{b.id}}">Approve</button>
+            <button name= "reject" value = "{{b.id}}">Reject</button>  
+
+          </form>
+         
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

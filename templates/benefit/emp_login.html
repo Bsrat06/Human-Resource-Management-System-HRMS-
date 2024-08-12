@@ -1,0 +1,19 @@
+ <!-- employee login to benefit -->
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+{% for m in messages%}
+{{m}}
+{% endfor %}
+{% endif %}
+<h1>login page for employee benefit self service</h1>
+<form method = "post" action = "">
+    {% csrf_token %}
+    <input name="user" type = "text" required placeholder="username" >
+    <input name="pk" required type="password" placeholder="password">
+    
+    <button type ="submit">login</button>
+</form>
+{% endblock %}
+

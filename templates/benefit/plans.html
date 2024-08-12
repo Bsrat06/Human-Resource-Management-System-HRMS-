@@ -1,0 +1,106 @@
+<!-- page of all Benefit plans for employee  -->
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+ 
+  <div class="container">
+    <h1>Benefits Plan Description </h1>
+    <button class="top-right-button"><a href="enroll/{{eid}}">Request Benefit</a></button>
+    <table>
+      <thead>
+        <tr>
+          <th>Benefit</th>
+          <th>Elligible</th>
+          <th>Description</th>
+          <th>Day limitation</th>
+          <th>Status</th>
+          <th>action</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in plans %}
+        {% if p.expiration_date  >= time and p.effective_date <= time %}
+        <tr>
+          <td>{{p.name}}</td>
+          <td>{{p.elligible}}</td>
+          <td>{{p.description}}</td>
+          <td>{{p.expiration_date}}</td>
+          <td>active</td>
+          <td><button class="show-popup-button" data-title="{{p.name}}  , Elligiblity: {{p.elligible}}" data-text="{{p.name}}">Apply</button></td>
+
+          
+         
+          {% endif %}
+          
+        </tr> 
+        {% endfor %}
+        
+      </tbody>
+    </table>
+    <div class="plan-details">
+     </div>
+  </div>
+  <div id="myPopup" class="popup">
+    <div class="popup-content">
+      <form method = "POST" action="">
+        {% csrf_token %}
+        <span class="close-button">&times;</span>
+        <div class="popup-title"></div>
+        <div class="popup-text" ></div>
+        <input type="text" class="popup-input" placeholder="cover " name = "cover" />
+        <input type="text" class="popup-input" placeholder="Additional info " name = "detail" />
+        <button class="popup-submit-button" id="input" name="sub">Submit</button>
+      </form>
+    </div>
+  </div>
+ 
+
+
+
+  <script>
+    var popup = document.getElementById("myPopup");
+
+// Get the close button element
+var closeButton = document.getElementsByClassName("close-button")[0];
+
+// Get all the show popup buttons
+var showPopupButtons = document.querySelectorAll(".show-popup-button");
+
+// Function to show the pop-up and populate the content
+var inputValue = document.getElementById("input")
+function showPopup(title, text) {
+  
+  document.querySelector(".popup-title").textContent = title;
+  document.querySelector(".popup-text").textContent = text;
+  popup.style.display = "block";
+  inputValue.value = text
+}
+
+// Function to hide the pop-up
+function hidePopup() {
+  popup.style.display = "none";
+}
+
+// Add click event listeners to the show popup buttons
+showPopupButtons.forEach(function(button) {
+  button.addEventListener("click", function() {
+    var title = this.dataset.title;
+    var text = this.dataset.text;
+    showPopup(title, text);
+  });
+});
+
+// Hide the pop-up when the close button is clicked
+closeButton.addEventListener("click", hidePopup);
+
+// Hide the pop-up when the user clicks outside the pop-up
+window.addEventListener("click", function(event) {
+  if (event.target == popup) {
+    hidePopup();
+  }
+});
+  </script>
+
+{% endblock %}

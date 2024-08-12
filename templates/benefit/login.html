@@ -1,0 +1,19 @@
+<!-- HR login to benefit management -->
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+{% for m in messages%}
+{{m}}
+{% endfor %}
+{% endif %}
+
+<form method = "post" action = "">
+    {% csrf_token %}
+    <input name="user" type = "text" required >
+    <input name="pk" required type="password">
+    
+    <button type ="submit">login</button>
+</form>
+{% endblock %}
+

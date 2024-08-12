@@ -1,0 +1,48 @@
+<!-- Adding Benefit page -->
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<div class="container">
+  <h1>Add New Benefit Plan</h1>
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div>
+      <label for="plan-name">Plan Name:</label>
+      <input type="text" id="plan-name" name="name" required>
+    </div>
+    <div>
+      <label for="plan-type">Plan Type:</label>
+      <select id="plan-type" name="type" required>
+        <option value="">Select Plan Type</option>
+        <option value="Service">Service</option>
+        <option value="Days off">Days Off</option>
+        <option value="Career">Career Development</option>
+        <option value="Insurance">Insurance</option>
+        <option value="Bonus">Bonus</option>
+      </select>
+    </div>
+    <div>
+      <label for="plan-effective-date">Effective Date:</label>
+      <input type="date" id="plan-effective-date" name="effective_date" required>
+    </div>
+    <div>
+      <label for="plan-expiration-date">Expiration Date:</label>
+      <input type="date" id="plan-expiration-date" name="expiration_date" required>
+    </div>
+    <div>
+      <label for="plan-elligible">Elligible:</label>
+      <input type="text" id="plan-ellgible" name="elligible" required>
+    </div>
+    <div>
+      <label for="plan-elligible">Cost:</label>
+      <input type="number" id="plan-ellgible" name="cost" required>
+    </div>
+    <div class="plan-details">
+      <label for="plan-description">Plan Description:</label>
+      <textarea id="plan-description" name="description" rows="5" required></textarea>
+    </div>
+    <button type="submit">Save Plan</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,313 @@
+<!-- Benefit management dashboard -->
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  {% if messages %}
+  {% for m in messages%}
+  {{m}}
+  {% endfor %}
+  {% endif %}
+  <header>
+    <h1>Benefit Dashboard</h1>
+    {{user.email}}
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout_user'%}" style="color: white;">logout</a>
+    {% endif %}
+
+  </header>
+
+  <nav>
+    <a href="add">Add Benefit Plans</a>
+    <a href="plan">Benefit Plans</a>
+    <a href="notif">Notification</a>
+    
+  </nav>
+
+  <main>
+    <div class="card">
+      <h2><a style="color:#333"href="sum">Enrollment Summary</a></h2>
+      <div class="chart-container" id="enrollmentChart">
+        <table>
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Request</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for e in enroll %}
+            <tr>
+              <td>{{e.ename}}</td>
+              <td>{{e.name}}</td>
+              <td>{{e.state}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+   
+    <div class="card">
+      <h2>Upcoming Renewals</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Benefit Plan</th>
+            <th>Renewal Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for b in benefit %}
+          <tr>
+            <td>{{b.name}}</td>
+            <td>{{b.expiration_date}}</td>
+            <td><button class="show-popup-button" data-title="{{b.id}}" data-text=" {{b.description}}">Renew</button></td>
+          </tr>
+          
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><a href="request">Pending Requests</a></h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Request</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            {% for e in req %}
+            <tr>
+              <td>{{e.ename}}</td>
+              <td>{{e.name}}</td>
+              <td>{{e.state}}</td>
+            </tr>
+            {% endfor %}
+          
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <nav>
+   
+    <h3 style="color:#007bff ;">Report</h3>
+  </nav>
+  <div id="myPopup" class="popup">
+    <div class="popup-content">
+      <form method = "POST" action="">
+        {% csrf_token %}
+        <span class="close-button">&times;</span>
+        <h1>Push End Date</h1>
+        <input type="date" name="date" required class="popup-input">
+        <button class="popup-submit-button"style="width: 100%;" id = "inputpop" name="submits">yes</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    var popup = document.getElementById("myPopup");
+    var inputValue = document.getElementById("inputpop")
+    var closeButton = document.getElementsByClassName("close-button")[0];
+    var showPopupButtons = document.querySelectorAll(".show-popup-button");
+    function showPopup(title) {
+      inputValue.value = title
+      popup.style.display = "block";
+    }
+    
+    function hidePopup() {
+      popup.style.display = "none";
+      popuppush.style.display = "none";
+    }
+    
+    showPopupButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        var title = this.dataset.title;
+        showPopup(title);
+      });
+    });
+   
+    closeButton.addEventListener("click", hidePopup);
+   
+    
+    // Hide the pop-up when the user clicks outside the pop-up
+    window.addEventListener("click", function(event) {
+      if (event.target == popup) {
+        hidePopup();
+      }
+    });
+      </script>
+  <div class="report-section" style="margin-left: 20px; padding: 10px;">
+    <select id="dropdown-list">
+        <option value="chart"><h2>Enrollement Report</h2></option>
+        <option value="chart1"><h2>Cost report</h2></option>
+        <option value="chart2"><h2>utilization report</h2></option>
+      </select>
+     
+  <div id="option1Content" class="content" >
+  <div class="chart" id ="chart"> 
+    <canvas id="claimsChart"  width="100%"></canvas>
+    <script>
+      var ctx = document.getElementById('claimsChart').getContext('2d');
+      var claimsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: {{label|safe}},
+          datasets: [
+            {
+            label: 'Employee numbers',
+            data: {{type}},
+            backgroundColor: 'rgba(4, 59,  92, 0.2)',
+            borderColor: 'rgba(3,78,96, 1)',
+            borderWidth: 1,
+            barPercentage: 0.9,
+            categoryPercentage: 0.8,
+          },
+        
+       ],
+        
+        options: {
+          scales: {
+            
+           
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return '$' + value.toLocaleString();
+                }
+              }
+            }
+          }
+        }
+      }});
+    </script>
+    
+
+
+  </div>
+
+
+  <div class="chart" id ="chart1" > 
+    <canvas id="claimsChart1"  width="100%"></canvas>
+    <script>
+      var ctx = document.getElementById('claimsChart1').getContext('2d');
+      var claimsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: {{label|safe}},
+          datasets: [
+            {
+            label: 'Total Cost ',
+            data: {{price|safe}},
+            backgroundColor: 'rgba(4, 59,  92, 0.2)',
+            borderColor: 'rgba(3,78,96, 1)',
+            borderWidth: 1,
+            barPercentage: 0.9,
+            categoryPercentage: 0.8,
+          },
+        
+       ],
+        
+        options: {
+          scales: {
+            
+           
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return '$' + value.toLocaleString();
+                }
+              }
+            }
+          }
+        }
+      }});
+    </script>
+  </div>
+   
+  <div class="chart" id ="chart2" > 
+    <canvas id="claimsChart2"  width="100%"></canvas>
+    <script>
+      var ctx = document.getElementById('claimsChart2').getContext('2d');
+      var claimsChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: {{state|safe}},
+          datasets: [
+            {
+            label: 'valuesutilize',
+            data: {{state_num}},
+            backgroundColor: 'rgba(4,59,92, 0.2)',
+            borderColor: 'rgba(3,78,96, 1)',
+            borderWidth: 1,
+            barPercentage: 0.9,
+            categoryPercentage: 0.8,
+          },
+        
+       ],
+        
+        options: {
+          scales: {
+            
+           
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return '$' + value.toLocaleString();
+                }
+              }
+            }
+          }
+        }
+      }});
+    </script>
+    
+
+
+  </div>
+
+
+
+  </div>
+  <script>
+
+const chart1 = document.getElementById('chart');
+const chart2 = document.getElementById('chart1');
+const chart3 = document.getElementById('chart2');
+
+const chartContainers = document.querySelectorAll('.chart');
+const chartDropdown = document.getElementById('dropdown-list');
+
+chartContainers.forEach((container, index) => {
+  if (index === 0) {
+    container.style.display = 'block';
+  } else {
+    container.style.display = 'none';
+  }
+});
+
+chartDropdown.addEventListener('change', () => {
+  chartContainers.forEach((container) => {
+    container.style.display = 'none';
+  });
+
+  const selectedChart = chartDropdown.value;
+  if (selectedChart) {
+    document.getElementById(`${selectedChart}`).style.display = 'block';
+  }
+});
+
+
+  </script>
+</div>
+{% endblock %}

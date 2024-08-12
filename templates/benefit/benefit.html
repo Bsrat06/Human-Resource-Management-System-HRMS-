@@ -1,0 +1,24 @@
+<!-- Employee Benefit self service front page -->
+
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<header>
+  <h1>Benefit Management - Self Service let say user name : {{user.email}} <a href="logout_user" style="color:black">logout</a></h1>
+  
+</header>
+<main>
+  <div class="card">
+    <h2>Welcome to Benefit Management</h2>
+    <p>Manage your company's employee benefit programs with ease.</p>
+    <button><a href="plans/{{user.email}}">Explore Benefits</a></button>
+  </div>
+
+  <div class="card">
+    <h2>My Enrollment</h2>
+    <p>The annual open enrollment period is coming soon. Review your benefit options and get ready to enroll.</p>
+    <a href="myenrol/{{user.email}}">Learn More</a>
+  </div>
+</main>
+{% endblock %}

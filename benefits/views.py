@@ -187,7 +187,7 @@ def enroll(request, eid):
        types= request.POST['plan']
        plans = Enrollement(user = user_name , ename=ename, bid = 0 ,type = types ,Request_date=now, name = name,expiration_date = expiration_date , enrollement_date = enrol_date,state = "pending" ,Request = 'Other Enrollement', detail = description)
        plans.save()
-       notf = Notification(user=user_name,bid = 0, ename=ename, Request = "Other Enrollement",state = "admin",date = now , detail =description)
+       notf = Notifications(user=user_name,bid = 0, ename=ename, Request = "Other Enrollement",state = "admin",date = now , detail =description)
        notf.save()      
     
     return render (request , 'benefit/enroll.html',{ "user":user  }  )

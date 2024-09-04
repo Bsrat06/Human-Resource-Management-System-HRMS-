@@ -1,0 +1,95 @@
+body {
+  background: linear-gradient(to right, #8a2be2, #ff0000);
+}
+
+.container2 {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 130px;
+  padding-bottom: 20px;
+  background-color: white;
+  width: 600px;
+  height: 450px;
+  border-radius: 15px;
+  padding-top: 20px;
+}
+.headercontent2 {
+  margin-left: -500px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.icon2 {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.forgot {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-left: -390px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.forgot span {
+  margin-left: 350px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: normal;
+  color: gray;
+}
+
+.submit2 {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs1 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 100px;
+}
+
+.input2 {
+  display: flex;
+  width: 350px;
+  height: 50px;
+  background-color: #eaeaea;
+  margin: auto;
+  align-items: center;
+  border-radius: 10px;
+  border: none;
+}
+
+.maininp{
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    color:  black;
+    padding: 20px;
+}
+.input2 img {
+    margin: 0px 10px;
+  }
+
+.submit2 button {
+  justify-content: center;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+  height: 50px;
+  color: white;
+  background-color: blueviolet;
+  border-radius: 10px;
+  box-shadow: none;
+  cursor: pointer;
+  border: none;
+}

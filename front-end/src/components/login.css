@@ -1,0 +1,117 @@
+body {
+  background: linear-gradient(to right, #8a2be2, #ff0000);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 130px;
+
+  padding-bottom: 20px;
+  background-color: white;
+  width: 600px;
+  height: 450px;
+  border-radius: 15px;
+  padding-top: 20px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin: top 30px;
+}
+
+.text {
+  font-size: 30px;
+  font-weight: 700;
+}
+.underline {
+  background-color: blueviolet;
+  width: 61px;
+  height: 6px;
+  border-radius: 9px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 10px;
+}
+.header p {
+  color: gray;
+}
+.input {
+  display: flex;
+  width: 350px;
+  height: 70px;
+  background-color: #eaeaea;
+  margin: auto;
+  align-items: center;
+  border-radius: 10px;
+}
+.input img {
+  margin: 0px 30px;
+}
+
+.input input {
+  width: 350px;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 19px;
+}
+
+.submit {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.submit button {
+  justify-content: center;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 0px;
+  width: 350px;
+  height: 50px;
+  color: white;
+  background-color: blueviolet;
+  border-radius: 10px;
+  box-shadow: none;
+  cursor: pointer;
+  border: none;
+}
+
+.forgotpass {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.noacc {
+  margin-top: 20px;
+  margin-left: 50px;
+  display: flex;
+  flex-direction: row; 
+}
+
+a {
+  margin-left: 5px;
+  color: blue;
+  text-decoration: none;
+}
+
+.login {
+  font-weight: bold;
+  color: black;
+}

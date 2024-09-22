@@ -1,0 +1,9 @@
+How to use POSTMAN!
+
+sending a request;
+
+curl -H "Authorization: Bearer YOUR_TOKEN_HERE" "http://localhost:8000/api/notifications/?format=json"
+
+
+
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MDQxNzE2LCJpYXQiOjE3MjcwMzgxMTYsImp0aSI6Ijk3MzdhZTcwOWM1ZTQ3MWNiMTcyYmI4NTFlZDg1OTgwIiwidXNlcl9pZCI6MSwiZmlyc3RuYW1lIjoiQnNyYXQifQ.tXBC72eztcmvPiAAw6IyDT5Uva_XuGf2GdYy40mHsw0" "http://localhost:8000/api/notifications/read/4/"
